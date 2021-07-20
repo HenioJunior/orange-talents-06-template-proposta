@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import com.zupacademy.proposta.validacao.CPFOrCNPJ;
-import com.zupacademy.proposta.validacao.UniqueValue;
 
 public class NovaPropostaRequest {
 
@@ -14,11 +13,9 @@ public class NovaPropostaRequest {
 	private String nome;
 	@Email
 	@NotBlank
-	@UniqueValue(domainClass = NovaProposta.class, fieldName = "email")
 	private String email;
 	@CPFOrCNPJ
 	@NotBlank
-	@UniqueValue(domainClass = NovaProposta.class, fieldName = "documento")
 	private String documento;
 	@NotBlank
 	private String endereco;
@@ -34,8 +31,17 @@ public class NovaPropostaRequest {
 		this.endereco = endereco;
 		this.salario = salario;
 	}
-	
+
+	public NovaPropostaRequest(@Email @NotBlank String email) {
+		this.email = email;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
 	public NovaProposta toModel() {
 		return new NovaProposta(nome, email, documento, endereco, salario);
 	}
+
 }
