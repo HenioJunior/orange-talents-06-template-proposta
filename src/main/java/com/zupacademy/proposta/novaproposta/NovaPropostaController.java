@@ -15,12 +15,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zupacademy.proposta.exceptions.DatabaseException;
+import com.zupacademy.proposta.solicitacaoanalise.RetornoAnaliseRequest;
+import com.zupacademy.proposta.solicitacaoanalise.SolicitacaoAnaliseFeign;
+import com.zupacademy.proposta.solicitacaoanalise.SolicitacaoAnaliseRequest;
+
+import feign.FeignException;
+
 @RestController
 @RequestMapping(value = "/propostas")
 public class NovaPropostaController {
 
 	@Autowired
 	NovaPropostaRepository repository;
+
+	@Autowired
+	SolicitacaoAnaliseFeign solicitacaoAnaliseFeign;
 
 	@PostMapping
 	@Transactional
@@ -46,4 +56,31 @@ public class NovaPropostaController {
 		return ResponseEntity.ok().body(response.toString());
 	}
 
+	@PostMapping(value = "/analise")
+	ResponseEntity<?> solicitarAnalise(@RequestBody @Valid SolicitacaoAnaliseRequest analiseRequest) {
+		Optional<NovaProposta> obj = repository.findById(analiseRequest.getIdProposta());
+		NovaProposta novaProposta = obj.orElseThrow(() -> new DatabaseException("id não localizado."));
+				 
+		if (analisaStatus(analiseRequest)) {
+			novaProposta.setStatus(StatusNovaProposta.ELEGIVEL);
+		} else {
+			novaProposta.setStatus(StatusNovaProposta.NAO_ELEGIVEL);
+		}
+		repository.save(novaProposta);
+		return ResponseEntity.ok().body(new RetornoAnaliseRequest(novaProposta));
+	}
+
+	public boolean analisaStatus(SolicitacaoAnaliseRequest analiseRequest) {
+		try {
+			NovaProposta novaProposta = repository.findById(analiseRequest.getIdProposta()).get();
+			RetornoAnaliseRequest analise = solicitacaoAnaliseFeign
+					.enviarParaAnalise(new SolicitacaoAnaliseRequest(novaProposta));
+			if (analise.getResultadoSolicitacao().contains("SEM_RESTRICAO")) {
+				return true;
+			}
+		} catch (FeignException e) {
+
+		}
+		return false;
+	}
 }

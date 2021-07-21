@@ -1,6 +1,7 @@
 package com.zupacademy.proposta.novaproposta;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,9 @@ public class NovaProposta {
 	@NotNull
 	@PositiveOrZero
 	private Double salario;
-			
+	@Enumerated
+	private StatusNovaProposta status;
+		
 	public NovaProposta() {
 		
 	}
@@ -39,9 +42,8 @@ public class NovaProposta {
 		this.documento = documento;
 		this.endereco = endereco;
 		this.salario = salario;
-		System.out.println(id);
 	}
-
+		
 	public Long getId() {
 		return id;
 	}
@@ -49,8 +51,27 @@ public class NovaProposta {
 	public String getNome() {
 		return nome;
 	}
+		
+	public String getDocumento() {
+		return documento;
+	}
 
 	public String getEmail() {
 		return email;
 	}
+
+	public void setStatus(StatusNovaProposta status) {
+		this.status = status;
+	}
+		
+	public StatusNovaProposta getStatus() {
+		return status;
+	}
+
+	@Override
+	public String toString() {
+		return "NovaProposta [id=" + id + ", nome=" + nome + ", email=" + email + ", documento=" + documento
+				+ ", endereco=" + endereco + ", salario=" + salario + ", status=" + status + "]";
+	}
+
 }
