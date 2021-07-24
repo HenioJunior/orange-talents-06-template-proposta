@@ -18,13 +18,12 @@ import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.util.Assert;
 
-import com.zupacademy.proposta.fluxotransacao.NovaTransacao;
-import com.zupacademy.proposta.fluxotransacao.SolicitaAnaliseRequest;
+import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
+import com.zupacademy.proposta.novatransacao.NovaTransacao;
 
 @Entity
 public class NovaProposta {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,7 +42,7 @@ public class NovaProposta {
 
 	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<NovaTransacao> transacoes = new HashSet<>();
-	
+
 	private String idCartao;
 
 	public NovaProposta() {
@@ -76,6 +75,10 @@ public class NovaProposta {
 		return email;
 	}
 		
+	public Set<NovaTransacao> getTransacoes() {
+		return transacoes;
+	}
+
 	public String getIdCartao() {
 		return idCartao;
 	}
@@ -96,12 +99,10 @@ public class NovaProposta {
 				"Já existe uma transaco igual a essa processada " + novaTransacao);
 
 		Assert.isTrue(transacoesAprovadasComSucesso().isEmpty(), "Essa proposta já foi aprovada");
-				
-		this.transacoes.add(novaTransacao);
-			
-	}
 
-	
+		this.transacoes.add(novaTransacao);
+
+	}
 
 	private Set<NovaTransacao> transacoesAprovadasComSucesso() {
 		Set<NovaTransacao> transacoesAprovadasComSucesso = this.transacoes.stream()

@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.fluxotransacao;
+package com.zupacademy.proposta.analiseproposta;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

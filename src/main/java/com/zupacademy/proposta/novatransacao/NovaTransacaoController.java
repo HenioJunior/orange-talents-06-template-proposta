@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.fluxotransacao;
+package com.zupacademy.proposta.novatransacao;
 
 import java.util.Set;
 
@@ -6,47 +6,54 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zupacademy.proposta.analiseproposta.RetornoAnaliseRequest;
+import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseFeign;
+import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.exceptions.DatabaseException;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 import com.zupacademy.proposta.novaproposta.NovaPropostaRepository;
-import com.zupacademy.proposta.solicitacartao.VerificadorDeCartao;
+import com.zupacademy.proposta.solicitacartao.SolicitaCartaoSchedule;
 
 import feign.FeignException;
 
 @RestController
 @RequestMapping(value = "/transacoes/")
-public class FluxoTransacaoController {
+public class NovaTransacaoController {
 
 	@Autowired
 	private NovaPropostaRepository repository;
 
 	@Autowired
 	private SolicitaAnaliseFeign solicitacaoAnaliseFeign;
-	
-	private Set<EventoNovaPropostaSucesso> eventosNovaPropostaSucesso;
-	
-	@Autowired
-	private VerificadorDeCartao verificadorCartao;
+
+	private Set<NovaTransacaoEvento> eventosNovaPropostaSucesso;
 
 	@Autowired
-	public FluxoTransacaoController(Set<EventoNovaPropostaSucesso> eventosNovaPropostaSucesso) {
+	public NovaTransacaoController(Set<NovaTransacaoEvento> eventosNovaPropostaSucesso) {
 		super();
 		this.eventosNovaPropostaSucesso = eventosNovaPropostaSucesso;
 	}
-	
+
+	@Autowired
+	private SolicitaCartaoSchedule verificadorCartao;
+
 	@Transactional
 	@PostMapping(value = "/analise")
-	public String enviarPropostaParaAnalise(@RequestBody @Valid SolicitaAnaliseRequest request) {
+	public ResponseEntity<?> enviarPropostaParaAnalise(@RequestBody @Valid SolicitaAnaliseRequest request) {
 		boolean status = verificarStatus(request);
-
-		return processa(request, status);
+		if(status == false) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(NovaTransacaoStatus.NAO_ELEGIVEL);		
+		}
+		return ResponseEntity.ok().body(processa(request, status));
 	}
-
+	
 	public boolean verificarStatus(@RequestBody @Valid SolicitaAnaliseRequest request) {
 		NovaProposta proposta = new NovaProposta();
 		try {

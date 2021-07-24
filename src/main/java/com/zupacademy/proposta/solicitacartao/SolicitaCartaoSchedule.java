@@ -5,11 +5,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.zupacademy.proposta.fluxotransacao.SolicitaAnaliseRequest;
+import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 
 @Component
 @EnableScheduling
-public class VerificadorDeCartao {
+public class SolicitaCartaoSchedule {
 
 	@Autowired
 	SolicitaCartaoService cartaoService;
@@ -20,13 +20,13 @@ public class VerificadorDeCartao {
 //	    private final long MINUTO = SEGUNDO * 60; 
 //	    private final long HORA = MINUTO * 60;
 
-	public VerificadorDeCartao() {
+	public SolicitaCartaoSchedule() {
 	}
 
 	@Scheduled(fixedDelay = SEGUNDO)
 	public void verificaPorSegundo() {
 		if (request != null) {
-			cartaoService.cartao(request);
+			cartaoService.emitirCartao(request);
 		}
 	}
 

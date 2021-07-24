@@ -41,9 +41,8 @@ public class NovaPropostaController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> findById(@PathVariable Long id) {
-		NovaProposta novaProposta = repository.findById(id).get();
-		NovaPropostaResponse response = new NovaPropostaResponse(novaProposta);
-		return ResponseEntity.ok().body(response.toString());
-	}
+	public DetalhePropostaResponse buscarPorId(@PathVariable Long id) {
+		NovaProposta proposta = repository.findById(id).get();
+		return new DetalhePropostaResponse(proposta);
+		}
 }

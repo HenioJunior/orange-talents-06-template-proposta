@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.fluxotransacao;
+package com.zupacademy.proposta.analiseproposta;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

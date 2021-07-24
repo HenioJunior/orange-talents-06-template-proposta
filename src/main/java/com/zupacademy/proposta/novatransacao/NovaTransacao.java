@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.fluxotransacao;
+package com.zupacademy.proposta.novatransacao;
 
 import java.util.Objects;
 
@@ -28,13 +28,13 @@ public class NovaTransacao {
 	@NotNull
 	private long idProposta;
 	@Enumerated
-	private StatusTransacao status;
+	private NovaTransacaoStatus status;
 	@Valid
 	@NotNull
 	@ManyToOne
 	private NovaProposta novaProposta;
 		
-	public NovaTransacao(String nome, @NotBlank String documento, @NotNull long idProposta, StatusTransacao status,
+	public NovaTransacao(String nome, @NotBlank String documento, @NotNull long idProposta, NovaTransacaoStatus status,
 			@Valid @NotNull NovaProposta novaProposta) {
 		this.nome = nome;
 		this.documento = documento;
@@ -59,11 +59,11 @@ public class NovaTransacao {
 		return idProposta;
 	}
 
-	public StatusTransacao getStatus() {
+	public NovaTransacaoStatus getStatus() {
 		return status;
 	}
 		
-	public void setStatus(StatusTransacao status) {
+	public void setStatus(NovaTransacaoStatus status) {
 		this.status = status;
 	}
 
@@ -72,7 +72,7 @@ public class NovaTransacao {
 	}
 
 	public boolean concluidaComSucesso() {
-		return this.status.equals(StatusTransacao.ELEGIVEL);
+		return this.status.equals(NovaTransacaoStatus.ELEGIVEL);
 	}
 
 	@Override

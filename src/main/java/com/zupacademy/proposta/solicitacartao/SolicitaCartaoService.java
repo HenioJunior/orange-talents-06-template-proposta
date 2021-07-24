@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.exceptions.DatabaseException;
-import com.zupacademy.proposta.fluxotransacao.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 import com.zupacademy.proposta.novaproposta.NovaPropostaRepository;
 
@@ -21,10 +21,10 @@ public class SolicitaCartaoService {
 	@Autowired
 	private NovaPropostaRepository repository;
 		
-	public void cartao(@RequestBody @Valid SolicitaAnaliseRequest request) {
+	public void emitirCartao(@RequestBody @Valid SolicitaAnaliseRequest request) {
 		NovaProposta proposta = buscarProposta(request.getIdProposta());
-		SolicitaCartaoResponse cartoes =  solicitaCartaoFeign.solicitarCartao(request);
-		proposta.setIdCartao(cartoes.getId());
+		SolicitaCartaoResponse retornoCartao =  solicitaCartaoFeign.solicitarCartao(request);
+		proposta.setIdCartao(retornoCartao.getId());
 		repository.save(proposta);
 	}
 	
