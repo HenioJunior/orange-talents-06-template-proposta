@@ -26,6 +26,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/h2-console/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/health/**").permitAll()
 		.and().csrf().disable();
+		http.headers().frameOptions().disable();
 		
 	}
 

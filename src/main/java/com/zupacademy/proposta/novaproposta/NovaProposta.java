@@ -1,20 +1,32 @@
 package com.zupacademy.proposta.novaproposta;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import org.springframework.util.Assert;
+
+import com.zupacademy.proposta.fluxotransacao.NovaTransacao;
+import com.zupacademy.proposta.fluxotransacao.SolicitaAnaliseRequest;
+
 @Entity
 public class NovaProposta {
+
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
 	private String nome;
@@ -28,22 +40,26 @@ public class NovaProposta {
 	@NotNull
 	@PositiveOrZero
 	private Double salario;
-	@Enumerated
-	private StatusNovaProposta status;
-		
+
+	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private Set<NovaTransacao> transacoes = new HashSet<>();
+	
+	private String idCartao;
+
 	public NovaProposta() {
-		
+
 	}
 
 	public NovaProposta(@NotBlank String nome, @Email @NotBlank String email, @NotBlank String documento,
 			@NotBlank String endereco, @NotNull @PositiveOrZero Double salario) {
+		super();
 		this.nome = nome;
 		this.email = email;
 		this.documento = documento;
 		this.endereco = endereco;
 		this.salario = salario;
 	}
-		
+
 	public Long getId() {
 		return id;
 	}
@@ -51,7 +67,7 @@ public class NovaProposta {
 	public String getNome() {
 		return nome;
 	}
-		
+
 	public String getDocumento() {
 		return documento;
 	}
@@ -59,19 +75,44 @@ public class NovaProposta {
 	public String getEmail() {
 		return email;
 	}
-
-	public void setStatus(StatusNovaProposta status) {
-		this.status = status;
-	}
 		
-	public StatusNovaProposta getStatus() {
-		return status;
+	public String getIdCartao() {
+		return idCartao;
+	}
+
+	public void setIdCartao(String idCartao) {
+		this.idCartao = idCartao;
 	}
 
 	@Override
 	public String toString() {
 		return "NovaProposta [id=" + id + ", nome=" + nome + ", email=" + email + ", documento=" + documento
-				+ ", endereco=" + endereco + ", salario=" + salario + ", status=" + status + "]";
+				+ ", endereco=" + endereco + ", salario=" + salario + " ]";
+	}
+
+	public void adicionaTransacao(SolicitaAnaliseRequest request, boolean status) {
+		NovaTransacao novaTransacao = request.toTransacao(this, status);
+		Assert.isTrue(!this.transacoes.contains(novaTransacao),
+				"Já existe uma transaco igual a essa processada " + novaTransacao);
+
+		Assert.isTrue(transacoesAprovadasComSucesso().isEmpty(), "Essa proposta já foi aprovada");
+				
+		this.transacoes.add(novaTransacao);
+			
+	}
+
+	
+
+	private Set<NovaTransacao> transacoesAprovadasComSucesso() {
+		Set<NovaTransacao> transacoesAprovadasComSucesso = this.transacoes.stream()
+				.filter(NovaTransacao::concluidaComSucesso).collect(Collectors.toSet());
+		Assert.isTrue(transacoesAprovadasComSucesso.size() <= 1,
+				"Erro: Tem mais de uma transação aprovada para a proposta");
+		return transacoesAprovadasComSucesso;
+	}
+
+	public boolean processadaComSucesso() {
+		return !transacoesAprovadasComSucesso().isEmpty();
 	}
 
 }

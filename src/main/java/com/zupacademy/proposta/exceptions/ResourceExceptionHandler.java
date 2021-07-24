@@ -21,7 +21,7 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodNotValidException.class)
     public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e , HttpServletRequest request) {
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         StandardError err = new StandardError(Instant.now(), status.value(), "Falha na validação",

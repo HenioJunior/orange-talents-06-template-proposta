@@ -1,12 +1,11 @@
-package com.zupacademy.proposta.solicitacaoanalise;
+package com.zupacademy.proposta.fluxotransacao;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @FeignClient(name = "solicitacao-analise-resource", url = "http://localhost:9999", path = "/api/solicitacao")
-public interface SolicitacaoAnaliseFeign {
+public interface SolicitaAnaliseFeign {
 	
 	@PostMapping
-	RetornoAnaliseRequest enviarParaAnalise(SolicitacaoAnaliseRequest solicitacaoAnaliseRequest);
-
+	RetornoAnaliseRequest enviarParaAnalise(SolicitaAnaliseRequest request);
 }
