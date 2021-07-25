@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface NovaPropostaRepository extends JpaRepository<NovaProposta, Long> {
 	
 	Optional <NovaProposta> findByDocumento(String documento);
-
+	
+	
 }

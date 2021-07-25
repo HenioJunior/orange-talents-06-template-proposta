@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.solicitacartao;
+package com.zupacademy.proposta.novocartao;
 
 import javax.validation.Valid;
 
@@ -13,19 +13,22 @@ import com.zupacademy.proposta.novaproposta.NovaPropostaRepository;
 
 
 @Service
-public class SolicitaCartaoService {
+public class NovoCartaoService {
 
 	@Autowired
-	private SolicitaCartaoFeign solicitaCartaoFeign;
+	private NovoCartaoFeign solicitaCartaoFeign;
 	
 	@Autowired
 	private NovaPropostaRepository repository;
+	
+	@Autowired
+	private NovoCartaoRepository cartaoRepository;
 		
 	public void emitirCartao(@RequestBody @Valid SolicitaAnaliseRequest request) {
 		NovaProposta proposta = buscarProposta(request.getIdProposta());
-		SolicitaCartaoResponse retornoCartao =  solicitaCartaoFeign.solicitarCartao(request);
-		proposta.setIdCartao(retornoCartao.getId());
-		repository.save(proposta);
+		NovoCartaoResponse retornoCartao =  solicitaCartaoFeign.solicitarCartao(request);
+		NovoCartao cartao = retornoCartao.toModel(proposta);
+		cartaoRepository.save(cartao);
 	}
 	
 	public NovaProposta buscarProposta(Long propostaId) {

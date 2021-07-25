@@ -19,7 +19,7 @@ import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.exceptions.DatabaseException;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 import com.zupacademy.proposta.novaproposta.NovaPropostaRepository;
-import com.zupacademy.proposta.solicitacartao.SolicitaCartaoSchedule;
+import com.zupacademy.proposta.novocartao.NovoCartaoSchedule;
 
 import feign.FeignException;
 
@@ -42,7 +42,7 @@ public class NovaTransacaoController {
 	}
 
 	@Autowired
-	private SolicitaCartaoSchedule verificadorCartao;
+	private NovoCartaoSchedule verificadorCartao;
 
 	@Transactional
 	@PostMapping(value = "/analise")

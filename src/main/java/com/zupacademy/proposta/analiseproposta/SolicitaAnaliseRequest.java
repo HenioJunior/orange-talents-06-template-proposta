@@ -49,7 +49,7 @@ public class SolicitaAnaliseRequest {
 
 	public NovaTransacao toTransacao(NovaProposta proposta, boolean statusAnalise) {
 		NovaTransacaoStatus status = statusAnalise == true ? NovaTransacaoStatus.ELEGIVEL : NovaTransacaoStatus.NAO_ELEGIVEL;
-		return new NovaTransacao(nome, documento, idProposta, status, proposta);
+		return new NovaTransacao(nome, documento, status, proposta);
 	}
 
 }

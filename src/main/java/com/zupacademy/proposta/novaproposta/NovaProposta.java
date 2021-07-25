@@ -20,6 +20,7 @@ import org.springframework.util.Assert;
 
 import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.novatransacao.NovaTransacao;
+import com.zupacademy.proposta.novocartao.NovoCartao;
 
 @Entity
 public class NovaProposta {
@@ -43,8 +44,9 @@ public class NovaProposta {
 	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<NovaTransacao> transacoes = new HashSet<>();
 
-	private String idCartao;
-
+	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	private Set<NovoCartao> cartoes;
+	
 	public NovaProposta() {
 
 	}
@@ -79,14 +81,7 @@ public class NovaProposta {
 		return transacoes;
 	}
 
-	public String getIdCartao() {
-		return idCartao;
-	}
-
-	public void setIdCartao(String idCartao) {
-		this.idCartao = idCartao;
-	}
-
+	
 	@Override
 	public String toString() {
 		return "NovaProposta [id=" + id + ", nome=" + nome + ", email=" + email + ", documento=" + documento

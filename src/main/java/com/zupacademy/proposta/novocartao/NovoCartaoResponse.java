@@ -1,6 +1,8 @@
-package com.zupacademy.proposta.solicitacartao;
+package com.zupacademy.proposta.novocartao;
 
-public class SolicitaCartaoResponse {
+import com.zupacademy.proposta.novaproposta.NovaProposta;
+
+public class NovoCartaoResponse {
 	
 	private String id;
 	private String emitidoEm;
@@ -8,7 +10,7 @@ public class SolicitaCartaoResponse {
 	private int limite;
 	private long idProposta;
 
-	public SolicitaCartaoResponse(String id, String emitidoEm, String titular, int limite, long idProposta) {
+	public NovoCartaoResponse(String id, String emitidoEm, String titular, int limite, long idProposta) {
 		this.id = id;
 		this.emitidoEm = emitidoEm;
 		this.titular = titular;
@@ -16,7 +18,7 @@ public class SolicitaCartaoResponse {
 		this.idProposta = idProposta;
 	}
 
-	public SolicitaCartaoResponse() {
+	public NovoCartaoResponse() {
 		
 	}
 
@@ -44,5 +46,10 @@ public class SolicitaCartaoResponse {
 	public String toString() {
 		return "Retorno Cartao [id=" + id + ", emitidoEm=" + emitidoEm + ", titular=" + titular + ", limite=" + limite
 				+ ", idProposta=" + idProposta + "]";
+	}
+
+	public NovoCartao toModel(NovaProposta proposta) {
+				
+		return new NovoCartao(id, emitidoEm , limite, proposta);
 	}
 }

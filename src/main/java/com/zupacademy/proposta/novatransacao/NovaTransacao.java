@@ -1,7 +1,5 @@
 package com.zupacademy.proposta.novatransacao;
 
-import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -25,8 +23,6 @@ public class NovaTransacao {
 	@CPFOrCNPJ
 	@NotBlank
 	private String documento;
-	@NotNull
-	private long idProposta;
 	@Enumerated
 	private NovaTransacaoStatus status;
 	@Valid
@@ -34,11 +30,10 @@ public class NovaTransacao {
 	@ManyToOne
 	private NovaProposta novaProposta;
 		
-	public NovaTransacao(String nome, @NotBlank String documento, @NotNull long idProposta, NovaTransacaoStatus status,
+	public NovaTransacao(String nome, @NotBlank String documento, NovaTransacaoStatus status,
 			@Valid @NotNull NovaProposta novaProposta) {
 		this.nome = nome;
 		this.documento = documento;
-		this.idProposta = idProposta;
 		this.status = status;
 		this.novaProposta = novaProposta;
 	}
@@ -54,11 +49,7 @@ public class NovaTransacao {
 	public String getDocumento() {
 		return documento;
 	}
-
-	public long getIdProposta() {
-		return idProposta;
-	}
-
+	
 	public NovaTransacaoStatus getStatus() {
 		return status;
 	}
@@ -77,27 +68,9 @@ public class NovaTransacao {
 
 	@Override
 	public String toString() {
-		return "NovaTransacao [nome=" + nome + ", documento=" + documento + ", idProposta=" + idProposta + ", status="
+		return "NovaTransacao [nome=" + nome + ", documento=" + documento + ", status="
 				+ status + ", novaProposta=" + novaProposta + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(documento, idProposta, nome);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NovaTransacao other = (NovaTransacao) obj;
-		return Objects.equals(documento, other.documento) && idProposta == other.idProposta
-				&& Objects.equals(nome, other.nome);
-	}
-	
-	
+		
 }
