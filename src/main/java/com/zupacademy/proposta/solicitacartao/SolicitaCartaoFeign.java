@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 
-@FeignClient(name = "cartao-resource", url = "http://localhost:8888", path = "/api/cartoes")
+@FeignClient(name = "cartao-resource", url = "http://contas:8888", path = "/api/cartoes")
 public interface SolicitaCartaoFeign {
 	
 	@PostMapping
