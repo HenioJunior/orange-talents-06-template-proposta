@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.novocartao;
+package com.zupacademy.proposta.cartao;
 
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -36,7 +36,7 @@ public class NovaBiometriaRequest {
 		return new String(byteValueBase64Decoded);
 	}
 
-	public void ToModel(NovoCartao atualizaCartao) {
+	public void ToModel(Cartao atualizaCartao) {
 		atualizaCartao.setPassword(decodeBase64(biometria));
 		atualizaCartao.setDataCriacaoPassword(dataCriacaoPassword);
 	}

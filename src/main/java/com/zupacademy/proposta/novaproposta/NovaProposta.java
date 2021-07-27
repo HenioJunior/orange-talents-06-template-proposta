@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
 
 import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.novatransacao.NovaTransacao;
-import com.zupacademy.proposta.novocartao.NovoCartao;
+import com.zupacademy.proposta.cartao.Cartao;
 
 @Entity
 public class NovaProposta {
@@ -45,7 +45,7 @@ public class NovaProposta {
 	private Set<NovaTransacao> transacoes = new HashSet<>();
 
 	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	private Set<NovoCartao> cartoes;
+	private Set<Cartao> cartoes;
 	
 	public NovaProposta() {
 

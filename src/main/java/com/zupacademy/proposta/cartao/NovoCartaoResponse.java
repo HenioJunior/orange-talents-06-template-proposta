@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.novocartao;
+package com.zupacademy.proposta.cartao;
 
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 
@@ -48,8 +48,8 @@ public class NovoCartaoResponse {
 				+ ", idProposta=" + idProposta + "]";
 	}
 
-	public NovoCartao toModel(NovaProposta proposta) {
+	public Cartao toModel(NovaProposta proposta) {
 				
-		return new NovoCartao(id, emitidoEm , limite, proposta);
+		return new Cartao(id, emitidoEm , limite, proposta);
 	}
 }

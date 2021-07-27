@@ -19,7 +19,7 @@ import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
 import com.zupacademy.proposta.exceptions.DatabaseException;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 import com.zupacademy.proposta.novaproposta.NovaPropostaRepository;
-import com.zupacademy.proposta.novocartao.NovoCartaoSchedule;
+import com.zupacademy.proposta.cartao.NovoCartaoSchedule;
 
 import feign.FeignException;
 

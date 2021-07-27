@@ -1,4 +1,4 @@
-package com.zupacademy.proposta.novocartao;
+package com.zupacademy.proposta.cartao;
 
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ public class NovoCartaoSchedule {
 	@Autowired
 	NovoCartaoService cartaoService;
 	@Autowired
-	NovoCartaoRepository repository;
+	CartaoRepository repository;
 
 	private SolicitaAnaliseRequest request;
 
@@ -41,7 +41,7 @@ public class NovoCartaoSchedule {
 	}
 
 	public boolean naoExisteCartao(SolicitaAnaliseRequest request) {
-		Optional<NovoCartao> obj = repository.findById(request.getIdProposta());
+		Optional<Cartao> obj = repository.findById(request.getIdProposta());
 		if (!obj.isPresent()) {
 			return true;
 		}
