@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.zupacademy.proposta.cartao.aviso.AvisoViagem;
 import com.zupacademy.proposta.cartao.bloqueio.Bloqueio;
 import com.zupacademy.proposta.cartao.bloqueio.EstadoCartao;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
