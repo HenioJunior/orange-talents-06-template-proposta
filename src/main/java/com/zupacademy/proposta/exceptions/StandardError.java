@@ -1,8 +1,6 @@
 package com.zupacademy.proposta.exceptions;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 public class StandardError {
 
@@ -21,12 +19,6 @@ public class StandardError {
         this.error = error;
         this.message = message;
         this.path = path;
-    }
-
-    private List<FieldMessage> errors = new ArrayList<>();
-
-    public void addError(String fieldName, String message) {
-        errors.add(new FieldMessage(fieldName, message));
     }
 
     public Instant getTimestamp() {
@@ -49,7 +41,4 @@ public class StandardError {
         return path;
     }
 
-    public List<FieldMessage> getErrors() {
-        return errors;
-    }
 }

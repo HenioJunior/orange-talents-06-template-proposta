@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 import com.zupacademy.proposta.cartao.aviso.AvisoViagem;
 import com.zupacademy.proposta.cartao.bloqueio.Bloqueio;
 import com.zupacademy.proposta.cartao.bloqueio.EstadoCartao;
+import com.zupacademy.proposta.cartao.carteiradigital.CarteiraDigital;
+import com.zupacademy.proposta.cartao.carteiradigital.ProvedorCarteira;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,6 +38,9 @@ public class Cartao {
 	@OneToMany(mappedBy = "cartao",cascade = CascadeType.MERGE)
 	private Set<Bloqueio> bloqueios = new HashSet<Bloqueio>();
 
+	@OneToMany(mappedBy = "cartao",cascade = CascadeType.MERGE)
+	private Set<CarteiraDigital> carteiras;
+
 	@Enumerated
 	private EstadoCartao estadoCartao = EstadoCartao.DESBLOQUEADO;
 
@@ -51,6 +56,10 @@ public class Cartao {
 	}
 
 	public Cartao() {
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getIdCartao() {
@@ -99,6 +108,15 @@ public class Cartao {
 
 	private boolean bloqueado() {
 		return this.bloqueios.isEmpty();
+	}
+
+	public void associarCarteira(CarteiraDigital carteira) {
+		this.carteiras.add(carteira);
+	}
+
+	public boolean jaEAssociadoACarteira(ProvedorCarteira provedor) {
+		return this.carteiras.stream()
+				.anyMatch(carteira -> carteira.getProvedor().equals(provedor));
 	}
 
 	@Override
