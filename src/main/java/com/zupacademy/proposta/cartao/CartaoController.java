@@ -107,7 +107,7 @@ public class CartaoController {
 		}
 		try {
 			CarteiraDigitalResponse retornoCarteiraDigital = feign.solicitarCarteira(cartao.getIdCartao(), request);
-			CarteiraDigital carteiraDigital = retornoCarteiraDigital.toModel(cartao);
+			CarteiraDigital carteiraDigital = retornoCarteiraDigital.toModel(cartao, request.getEmissor());
 			carteiraDigitalRepository.save(carteiraDigital);
 
 			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

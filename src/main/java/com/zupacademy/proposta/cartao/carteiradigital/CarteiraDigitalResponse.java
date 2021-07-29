@@ -17,21 +17,15 @@ public class CarteiraDigitalResponse {
         this.id = id;
     }
 
-    public CarteiraDigital toModel(Cartao cartao) {
+    public CarteiraDigital toModel(Cartao cartao, ProvedorCarteira provedor) {
 
-        return new CarteiraDigital(resultado, id, ProvedorCarteira.PAYPAL,cartao);
+        return new CarteiraDigital(resultado, id, provedor,cartao);
     }
 
     public String getId() {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "CarteiraDigitalResponse{" +
-                "resultado='" + resultado + '\'' +
-                '}';
-    }
 }
 
 

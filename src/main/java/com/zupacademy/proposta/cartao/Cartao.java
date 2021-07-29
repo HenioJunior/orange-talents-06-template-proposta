@@ -119,16 +119,4 @@ public class Cartao {
 				.anyMatch(carteira -> carteira.getProvedor().equals(provedor));
 	}
 
-	@Override
-	public String toString() {
-		return "Cartao{" +
-				"idCartao='" + idCartao + '\'' +
-				", emitidoEm='" + emitidoEm + '\'' +
-				", limite=" + limite +
-				", dataCriacaoPassword=" + dataCriacaoPassword +
-				", bloqueia=" + bloqueios +
-				", estadoCartao=" + estadoCartao +
-				", novaProposta=" + novaProposta +
-				'}';
-	}
 }

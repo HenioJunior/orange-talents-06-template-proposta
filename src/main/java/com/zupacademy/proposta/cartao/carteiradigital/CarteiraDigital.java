@@ -42,13 +42,4 @@ public class CarteiraDigital {
         return provedor;
     }
 
-    @Override
-    public String toString() {
-        return "CarteiraDigital{" +
-                "associadaEm=" + associadaEm +
-                ", resultado='" + resultado + '\'' +
-                ", idCarteira='" + idCarteira + '\'' +
-                ", cartao=" + cartao +
-                '}';
-    }
 }
