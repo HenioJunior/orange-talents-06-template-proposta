@@ -4,8 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.zupacademy.proposta.novaproposta.NovaProposta;
+import com.zupacademy.proposta.novaproposta.NovaPropostaStatus;
 import com.zupacademy.proposta.novatransacao.NovaTransacao;
-import com.zupacademy.proposta.novatransacao.NovaTransacaoStatus;
 import com.zupacademy.proposta.validacao.CPFOrCNPJ;
 
 public class SolicitaAnaliseRequest {
@@ -47,9 +47,8 @@ public class SolicitaAnaliseRequest {
 		return idProposta;
 	}
 
-	public NovaTransacao toTransacao(NovaProposta proposta, boolean statusAnalise) {
-		NovaTransacaoStatus status = statusAnalise == true ? NovaTransacaoStatus.ELEGIVEL : NovaTransacaoStatus.NAO_ELEGIVEL;
-		return new NovaTransacao(nome, documento, status, proposta);
+	public NovaTransacao toTransacao(NovaProposta proposta) {
+		return new NovaTransacao(nome, documento, proposta);
 	}
 
 }

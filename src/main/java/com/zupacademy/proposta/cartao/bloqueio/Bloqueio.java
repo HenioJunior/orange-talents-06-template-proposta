@@ -37,4 +37,10 @@ public class Bloqueio {
         this.ipCliente = ipCliente;
         this.userAgent = userAgent;
     }
+
+	public LocalDateTime getInstante() {
+		return instante;
+	}
+    
+    
 }

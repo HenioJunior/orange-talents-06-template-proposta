@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,6 +41,9 @@ public class NovaProposta {
 	@NotNull
 	@PositiveOrZero
 	private Double salario;
+	
+	@Enumerated
+	private NovaPropostaStatus status;
 
 	@OneToMany(mappedBy = "novaProposta", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Set<NovaTransacao> transacoes = new HashSet<>();
@@ -76,7 +80,15 @@ public class NovaProposta {
 	public String getEmail() {
 		return email;
 	}
-		
+				
+	public NovaPropostaStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(NovaPropostaStatus status) {
+		this.status = status;
+	}
+
 	public Set<NovaTransacao> getTransacoes() {
 		return transacoes;
 	}
@@ -88,8 +100,8 @@ public class NovaProposta {
 				+ ", endereco=" + endereco + ", salario=" + salario + " ]";
 	}
 
-	public void adicionaTransacao(SolicitaAnaliseRequest request, boolean status) {
-		NovaTransacao novaTransacao = request.toTransacao(this, status);
+	public void adicionaTransacao(SolicitaAnaliseRequest request) {
+		NovaTransacao novaTransacao = request.toTransacao(this);
 		Assert.isTrue(!this.transacoes.contains(novaTransacao),
 				"Já existe uma transaco igual a essa processada " + novaTransacao);
 

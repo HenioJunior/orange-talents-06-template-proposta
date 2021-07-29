@@ -1,7 +1,6 @@
 package com.zupacademy.proposta.novatransacao;
 
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,18 +22,15 @@ public class NovaTransacao {
 	@CPFOrCNPJ
 	@NotBlank
 	private String documento;
-	@Enumerated
-	private NovaTransacaoStatus status;
 	@Valid
 	@NotNull
 	@ManyToOne
 	private NovaProposta novaProposta;
 		
-	public NovaTransacao(String nome, @NotBlank String documento, NovaTransacaoStatus status,
+	public NovaTransacao(String nome, @NotBlank String documento,
 			@Valid @NotNull NovaProposta novaProposta) {
 		this.nome = nome;
 		this.documento = documento;
-		this.status = status;
 		this.novaProposta = novaProposta;
 	}
 
@@ -49,28 +45,13 @@ public class NovaTransacao {
 	public String getDocumento() {
 		return documento;
 	}
-	
-	public NovaTransacaoStatus getStatus() {
-		return status;
-	}
 		
-	public void setStatus(NovaTransacaoStatus status) {
-		this.status = status;
-	}
-
 	public NovaProposta getNovaProposta() {
 		return novaProposta;
 	}
 
 	public boolean concluidaComSucesso() {
-		return this.status.equals(NovaTransacaoStatus.ELEGIVEL);
+		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "NovaTransacao [nome=" + nome + ", documento=" + documento + ", status="
-				+ status + ", novaProposta=" + novaProposta + "]";
-	}
-
-		
+			
 }

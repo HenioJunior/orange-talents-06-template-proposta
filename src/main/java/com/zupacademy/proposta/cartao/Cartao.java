@@ -4,18 +4,25 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.zupacademy.proposta.cartao.aviso.AvisoViagem;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.zupacademy.proposta.cartao.bloqueio.Bloqueio;
 import com.zupacademy.proposta.cartao.bloqueio.EstadoCartao;
 import com.zupacademy.proposta.cartao.carteiradigital.CarteiraDigital;
 import com.zupacademy.proposta.cartao.carteiradigital.ProvedorCarteira;
 import com.zupacademy.proposta.novaproposta.NovaProposta;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 @Entity
 public class Cartao {
