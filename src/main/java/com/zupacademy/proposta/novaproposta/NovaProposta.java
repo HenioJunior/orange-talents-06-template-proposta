@@ -17,6 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 
 import com.zupacademy.proposta.analiseproposta.SolicitaAnaliseRequest;
@@ -60,7 +61,7 @@ public class NovaProposta {
 		super();
 		this.nome = nome;
 		this.email = email;
-		this.documento = documento;
+		this.documento = new BCryptPasswordEncoder().encode(documento);
 		this.endereco = endereco;
 		this.salario = salario;
 	}
